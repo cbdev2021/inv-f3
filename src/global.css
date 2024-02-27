@@ -1,0 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Wallpoet:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+body {
+  margin: 0;
+  line-height: normal;
+  background-color:#f0f2f5 !important;
+  height: 100%; /* Asegura que el body ocupa el 100% de la altura */
+  overflow-y: auto; /* Añade un scroll si es necesario */
+
+}
+:root {
+  /* fonts */
+  --font-roboto: Roboto;
+  --font-wallpoet: Wallpoet;
+
+  /* font sizes */
+  --font-size-sm: 14px;
+  --font-size-5xl: 24px;
+  --font-size-9xl: 28px;
+  --font-size-29xl: 48px;
+  --font-size-lg: 18px;
+
+  /* Colors */
+  --color-white: #fff;
+  --color-black: #000;
+  --color-gainsboro-100: rgba(217, 217, 217, 0.9);
+  --color-fuchsia: #da48ff;
+
+  /* Gaps */
+  --gap-lgi: 19px;
+}
+
+/* contenedor app */
+
+.app-container {
+  /* height: 100%; */
+  display: flex;
+  height: 100vh; /* Ajusta la altura al 100% de la ventana */
+}
+
+.component-container {
+  max-height: 86vh;
+    overflow-y: auto;
+    max-width: 65%;
+}
+.component-container-reports {
+  max-height: 86vh;
+    overflow-y: auto;
+    max-width: 35%;
+}
+/* @media (min-width: 300px) and (max-width: 768px) {
+  .component-container,
+  .component-container-reports {
+    max-width: 100%;
+  }
+} */
+@media (min-width: 300px) and (max-width: 768px) {
+  .component-container{
+    max-width: 100%;
+  }
+}
+@media (min-width: 240px) and (max-width: 650px) {
+  .component-container-reports {
+    max-width: 100%;
+  }
+}
+@media (min-width: 651px) and (max-width: 1140px) {
+  .component-container-reports {
+    max-width: 70%;
+  }
+}
+
+
+
+
+
+
+
+.h7 {
+  font-size: 18px; /* Puedes ajustar el tamaño de fuente según tus preferencias */
+  /* Otros estilos personalizados, si es necesario */
+}
+
+.common-styles {
+  margin-top: 40px;
+  /* height: 540.5px; */
+}
+
+/* .form {
+  position: relative;
+ 
+  background-color:#f0f2f5;
+  
+  width: 100%;
+
+  height: 100%;
+
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+} 
+*/
+
+.form {
+  position: relative;
+  background-color: #f0f2f5;
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}
+
+.form-elements-container {
+  width: 70%;
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between; /* Espacio entre los elementos */
+  margin-top: 16px;
+  padding: 0 50px; /* Espacio horizontal entre botones */
+}
+
+.yaTienesCuentaContainer {
+  position: absolute;
+  /* top: calc(50% + 100px);  */
+  top: calc(50% + 300px);   
+
+  left: calc(50% - 104px); /* Ajusta la posición horizontal aquí */
+  text-align: center;
+  display: inline-block;
+  width: 250px;
+  height: 20px;
+  color: var(--color-fuchsia);
+}
+
+.noTienesCuentaContainer {
+  position: absolute;
+  /* top: calc(50% + 100px); */
+  top: calc(50% + 300px); 
+
+  left: calc(50% - 104px); /* Ajusta la posición horizontal aquí */
+  text-align: center;
+  display: inline-block;
+  width: 250px;
+  height: 28px;
+  color: var(--color-fuchsia);
+}
+
+.registrate {
+  color: var(--color-black);
+}
+
+.fade-in-horizontal {
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.fade-in-horizontal.active {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.fade-in-vertical {
+  opacity: 0;
+  transform: scaleY(0);
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.fade-in-vertical.active {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.contenedor {
+  display: flex;
+  height: 100vh; 
+}
+
+/* .mitad-izquierda {
+  flex: 1;
+  background-color: #e0e0e0; 
+}
+
+.mitad-derecha {
+  flex: 1;
+  background-color: #c0c0c0; 
+}
+
+@media (max-width: 768px) {
+
+  .contenedor {
+    flex-direction: column; 
+  }
+
+  .mitad-derecha {
+    order: -1;
+  }
+} */
+
+@media (max-width: 768px) {
+  .contenedor {
+    flex-direction: column; /* Cambia la dirección a columna para móviles y tabletas */
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana gráfica */
+  }
+
+  .mitad-izquierda,
+  .mitad-derecha {
+    width: 100%; /* Ocupar el 100% del ancho en dispositivos móviles y tabletas */
+    height: 50%; /* Cada mitad ocupa el 50% de la altura */
+
+    /* Asegurar que cada mitad tenga al menos 689 px de altura */
+    min-height: 689px;
+  }
+
+  .mitad-derecha {
+    order: 1; /* Cambia el orden para que la mitad derecha aparezca debajo en dispositivos más pequeños */
+    margin-top: 0; /* No es necesario el margen superior en este caso */
+  }
+}
