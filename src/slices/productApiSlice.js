@@ -2,8 +2,8 @@ import { apiSlice } from './apiSlice';
 
 // Reemplaza la URL correcta de tus servicios de valores de tipo
 
-const TYPE_VALUES_URL = 'http://localhost:10000/api/products';
-//const TYPE_VALUES_URL = 'https://inv-b1.vercel.app/api/products';
+//const TYPE_VALUES_URL = 'http://localhost:10000/api/products';
+const TYPE_VALUES_URL = 'https://inv-b3.vercel.app/api/products';
 
 export const typeValuesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

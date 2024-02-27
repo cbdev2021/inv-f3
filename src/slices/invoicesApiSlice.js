@@ -2,8 +2,8 @@ import { apiSlice } from './apiSlice';
 
 // Reemplaza la URL correcta de tus servicios de valores de tipo
 
-const INVOICES_URL = 'http://localhost:10000/api/invoices';
-//const INVOICES_URL = 'https://inv-b1.vercel.app/api/invoices';
+//const INVOICES_URL = 'http://localhost:10000/api/invoices';
+const INVOICES_URL = 'https://inv-b3.vercel.app/api/invoices';
 
 export const invoicesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
