@@ -523,7 +523,7 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
     try {
       for (const originalProduct of searchResults) {
         const product = { ...originalProduct };
-        product.invoiceID = generateIdData.sequence_value;
+        product.invoiceID = (generateIdData.sequence_value)+1;
         product.invoiceType = typevalue;
         product.amount = productAmounts[product.productId]; // Ensure amount is provided
         product.dateIssue = dateIssue;
@@ -665,7 +665,7 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
               label="Invoice ID"
               variant="outlined"
               type="text"
-              value={invoiceId}
+              value={(invoiceId)+1}
               fullWidth
               InputProps={{
                 readOnly: true,
