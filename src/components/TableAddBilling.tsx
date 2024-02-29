@@ -48,7 +48,7 @@ import 'dayjs/locale/es';
 
 
 interface Product {
-  id: string;
+  id: number;
   productId: number;
   name: string;
   description: string;
@@ -63,7 +63,7 @@ interface TableConfigProps {
   userId: string;
   title: string;
   data: {
-    id: string;
+    id: number;
     subtype: string;
   }[];
   typevalue: string;
@@ -144,6 +144,7 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
   //search
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<Array<{
+    id: number;
     invoiceID: number;
     invoiceType: string;
     productId: number;
@@ -155,6 +156,7 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
     dateIssue: string;
   }>>([]);
   const [selectedProduct, setSelectedProduct] = useState<{
+    id: number;
     invoiceID: number;
     invoiceType: string;
     productId: number;
@@ -171,8 +173,9 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
   const [invalidationKey, setInvalidationKey] = useState<number>(0); // Estado para la clave de invalidación
 
   const [editableAmount, setEditableAmount] = useState('');
-  const [productAmounts, setProductAmounts] = useState<{ [productId: number]: number }>({});
+  const [productAmounts, setProductAmounts] = useState<{ [id: number]: number }>({});
   const [searchResultsUpdated, setSearchResultsUpdated] = useState<Array<{
+    id: number;
     invoiceID: number;
     invoiceType: string;
     productId: number;
@@ -476,9 +479,9 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
 
   const handleSearch = () => {
     const filteredResults = dataResponseRegisters.filter(
-      (product: { name: string; productId: number; }) =>
+      (product: { name: string; id: number; }) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.productId.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        product.id.toString().toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     setSearchResults(filteredResults);
@@ -494,7 +497,7 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
 
     setProductAmounts((prevAmounts) => {
       const updatedAmounts = { ...prevAmounts };
-      updatedAmounts[selectedProduct!.productId] = Number(editableAmount);
+      updatedAmounts[selectedProduct!.id] = Number(editableAmount);
       return updatedAmounts;
     });
 
@@ -513,7 +516,7 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
     console.log('Previous results:', searchResults);
 
     setSearchResults((prevResults) => {
-      const newResults = prevResults.filter((product) => product.productId !== productIdToDelete);
+      const newResults = prevResults.filter((product) => product.id !== productIdToDelete);
       console.log('New results:', newResults);
       return newResults;
     });
@@ -525,7 +528,7 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
         const product = { ...originalProduct };
         product.invoiceID = (generateIdData.sequence_value)+1;
         product.invoiceType = typevalue;
-        product.amount = productAmounts[product.productId]; // Ensure amount is provided
+        product.amount = productAmounts[product.id]; // Ensure amount is provided
         product.dateIssue = dateIssue;
         // product.utility = product.utility;
         console.log("product");
@@ -550,16 +553,28 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
     }
   };
 
-  const handleAmountChange = (productId: number, newValue: number) => {
+  // const handleAmountChange = (productId: number, newValue: number) => {
+  //   setProductAmounts((prevAmounts) => ({
+  //     ...prevAmounts,
+  //     [productId]: newValue,
+  //   }));
+  // };
+
+  const handleAmountChange = (id: number, newValue: number) => {
     setProductAmounts((prevAmounts) => ({
       ...prevAmounts,
-      [productId]: newValue,
+      [id]: newValue,
     }));
   };
 
-  const handleEditAmount = (productId: number) => {
-    const updatedAmount = productAmounts[productId];
-    console.log(`Product ${productId} amount updated to ${updatedAmount}`);
+  // const handleEditAmount = (productId: number) => {
+  //   const updatedAmount = productAmounts[productId];
+  //   console.log(`Product ${productId} amount updated to ${updatedAmount}`);
+  // };
+
+  const handleEditAmount = (id: number) => {
+    const updatedAmount = productAmounts[id];
+    console.log(`Product ${id} amount updated to ${updatedAmount}`);
   };
 
   // Función para forzar la recarga de datos
@@ -895,9 +910,9 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
             <TableBody>
               {typevalue === 'View'
                 ? filteredData.map((product) => (
-                  // <TableRow key={product.productId}>
+                  // <TableRow key={product.id}>
                   <TableRow key={product.id}>  
-                    <TableCell>{product.productId}</TableCell>
+                    <TableCell>{product.id}</TableCell>
                     <TableCell>{product.description}</TableCell>
                     <TableCell>{product.price}</TableCell>
                     <TableCell>{product.amount}</TableCell>
@@ -905,26 +920,26 @@ const TableAddBilling: FunctionComponent<TableConfigProps> = ({
                   </TableRow>
                 ))
                 : searchResults.map((product) => (
-                  <TableRow key={product.productId}>
-                    <TableCell>{product.productId}</TableCell>
+                  <TableRow key={product.id}>
+                    <TableCell>{product.id}</TableCell>
                     <TableCell>{product.description}</TableCell>
                     <TableCell>{product.price}</TableCell>
                     <TableCell>
                       <TextField
                         type="number"
-                        value={productAmounts[Number(product.productId)] || 0}
+                        value={productAmounts[Number(product.id)] || 0}
                         onChange={(e) => {
                           const newValue = e.target.value;
                           // Ensure newValue is a valid number before passing it to handleAmountChange
                           const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
-                          handleAmountChange(product.productId, numericValue);
+                          handleAmountChange(product.id, numericValue);
                         }}
-                        onBlur={() => handleEditAmount(product.productId)}
+                        onBlur={() => handleEditAmount(product.id)}
                         inputProps={{ min: 1 }}
                       />
                     </TableCell>
                     <TableCell>
-                      <IconButton onClick={() => handleDeleteFromList(product.productId)}>
+                      <IconButton onClick={() => handleDeleteFromList(product.id)}>
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
