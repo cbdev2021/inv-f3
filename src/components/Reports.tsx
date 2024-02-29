@@ -63,7 +63,7 @@ const Reports: FunctionComponent = () => {
 
     type Record = {
         totalSales: number;
-        id: string;
+        id: number;
         idUsuario: string;
         invoiceType: string;
         invoiceID: number;
@@ -161,7 +161,7 @@ const Reports: FunctionComponent = () => {
     function getTopSellingProducts(records: Record[], targetInvoiceType: string): Record[] {
         const filteredRecords = records.filter((record) => record.invoiceType === targetInvoiceType);
 
-        const productSalesMap: { [productId: number]: number } = {};
+        const productSalesMap: { [id: number]: number } = {};
         // Calcular la venta total de cada producto
         filteredRecords.forEach((record) => {
             const productSales = (() => {
@@ -176,22 +176,22 @@ const Reports: FunctionComponent = () => {
                 }
             })();
             // Utilizar el productId como clave para sumar los valores
-            productSalesMap[record.productId] = (productSalesMap[record.productId] || 0) + productSales;
+            productSalesMap[record.id] = (productSalesMap[record.id] || 0) + productSales;
         });
 
         // Crear un array de objetos con productId y totalSales
         const sortedProducts = Object.keys(productSalesMap)
-            .map((productId) => ({
-                productId: parseInt(productId),
-                totalSales: productSalesMap[parseInt(productId)],
+            .map((id) => ({
+                id: parseInt(id),
+                totalSales: productSalesMap[parseInt(id)],
             }))
             .sort((a, b) => b.totalSales - a.totalSales);
 
         // Crear un mapa de registros únicos con la suma total
-        const uniqueProductMap: { [productId: number]: Record } = {};
+        const uniqueProductMap: { [id: number]: Record } = {};
         filteredRecords.forEach((record) => {
-            uniqueProductMap[record.productId] = uniqueProductMap[record.productId] || { ...record, totalSales: 0 };
-            uniqueProductMap[record.productId].totalSales += productSalesMap[record.productId];
+            uniqueProductMap[record.id] = uniqueProductMap[record.id] || { ...record, totalSales: 0 };
+            uniqueProductMap[record.id].totalSales += productSalesMap[record.id];
         });
 
         // Convertir el mapa a un array de registros únicos
